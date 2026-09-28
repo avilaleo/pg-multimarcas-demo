@@ -1,8 +1,9 @@
 import { Hero } from "@/components/home/Hero";
 import { FeaturedVehicles } from "@/components/home/FeaturedVehicles";
-import { TrustFacts } from "@/components/home/TrustFacts";
+import { DeliveryCarousel } from "@/components/home/DeliveryCarousel";
 import { SellVehicleTeaser } from "@/components/home/SellVehicleTeaser";
-import { ContactLocation } from "@/components/home/ContactLocation";
+import { FinancingTeaser } from "@/components/home/FinancingTeaser";
+import { Wayfinding } from "@/components/home/Wayfinding";
 import { vehicleRepository } from "@/lib/repositories/static-vehicle-repository";
 
 export default async function HomePage() {
@@ -14,10 +15,11 @@ export default async function HomePage() {
   return (
     <>
       <Hero brands={brands} />
-      <TrustFacts />
       <FeaturedVehicles vehicles={featuredVehicles} />
+      <DeliveryCarousel />
       <SellVehicleTeaser />
-      <ContactLocation />
+      <FinancingTeaser />
+      <Wayfinding />
     </>
   );
 }

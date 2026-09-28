@@ -37,11 +37,13 @@ export const metadata: Metadata = {
   robots: SITE_INDEXABLE
     ? { index: true, follow: true }
     : { index: false, follow: false, nocache: true },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: dealerConfig.name,
     url: SITE_URL,
+    images: [{ url: "/brand/showroom-hero.jpg", width: 900, height: 1600 }],
   },
 };
 
