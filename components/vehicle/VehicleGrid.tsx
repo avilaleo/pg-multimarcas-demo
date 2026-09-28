@@ -1,14 +1,48 @@
-import { SearchX } from "lucide-react";
+import { MessageCircle, SearchX } from "lucide-react";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
+import { LinkButton } from "@/components/ui/Button";
+import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 import type { Vehicle } from "@/lib/domain/vehicle";
 
-export function VehicleGrid({ vehicles }: { vehicles: Vehicle[] }) {
+export function VehicleGrid({
+  vehicles,
+  hasActiveFilters = false,
+}: {
+  vehicles: Vehicle[];
+  hasActiveFilters?: boolean;
+}) {
   if (vehicles.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-3 py-20 text-center text-muted">
-        <SearchX className="h-10 w-10" aria-hidden />
-        <p className="text-lg font-semibold text-ink">Nenhum veículo encontrado</p>
-        <p className="max-w-sm text-sm">Tente ajustar os filtros de busca — marca, faixa de preço ou ano.</p>
+      <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed border-line bg-paper px-6 py-16 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface">
+          <SearchX className="h-8 w-8 text-muted" aria-hidden />
+        </div>
+        <div className="space-y-1">
+          <p className="text-lg font-semibold text-ink">Nenhum veículo encontrado</p>
+          <p className="max-w-sm text-sm text-muted">
+            Não encontramos veículos com esses filtros. Tente ajustar a busca, marca, preço ou ano — ou veja
+            todo o nosso estoque.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {hasActiveFilters && (
+            <LinkButton href="/estoque" variant="primary" size="sm">
+              Limpar filtros
+            </LinkButton>
+          )}
+          <LinkButton href="/estoque" variant="outline" size="sm">
+            Ver todo o estoque
+          </LinkButton>
+        </div>
+        <a
+          href={getGeneralWhatsAppUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-whatsapp hover:underline"
+        >
+          <MessageCircle className="h-4 w-4" aria-hidden />
+          Procurando algo específico? Fale conosco no WhatsApp
+        </a>
       </div>
     );
   }
