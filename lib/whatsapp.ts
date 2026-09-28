@@ -33,3 +33,19 @@ export function getFinancingWhatsAppUrl(vehicle: Vehicle): string {
     `Olá! Gostaria de simular um financiamento para o ${title} anunciado no site da ${dealerConfig.name}.`
   );
 }
+
+/** Financing WhatsApp link with no vehicle in context (e.g. the standalone /financiamento page). */
+export function getGeneralFinancingWhatsAppUrl(): string {
+  return buildWhatsAppUrl(
+    `Olá! Gostaria de simular um financiamento na ${dealerConfig.name}.`
+  );
+}
+
+/**
+ * Generic WhatsApp link with a caller-built message — for flows (like the
+ * trade-in wizard) that assemble a multi-field message of their own instead
+ * of using one of the fixed templates above.
+ */
+export function getCustomWhatsAppUrl(message: string): string {
+  return buildWhatsAppUrl(message);
+}
