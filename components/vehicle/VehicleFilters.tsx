@@ -42,7 +42,6 @@ export function VehicleFilters({
       </div>
 
       <form
-        action="/estoque"
         method="get"
         onSubmit={handleSubmit}
         className={`${open ? "grid" : "hidden"} mx-auto w-full max-w-7xl grid-cols-2 gap-3 px-4 pb-4 sm:px-6 lg:grid lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1fr_1fr_auto] lg:items-end lg:px-8 lg:py-4`}

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { VehicleFilters } from "@/components/vehicle/VehicleFilters";
-import { VehicleGrid } from "@/components/vehicle/VehicleGrid";
 import { Container } from "@/components/ui/Container";
-import { ListViewTracker } from "@/components/vehicle/ListViewTracker";
+import { InventoryClient } from "@/components/vehicle/InventoryClient";
 import { vehicleRepository } from "@/lib/repositories/static-vehicle-repository";
-import { parseVehicleFilters } from "@/lib/parse-vehicle-filters";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/env";
+
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Estoque de veículos",
@@ -15,14 +14,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/estoque" },
 };
 
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
-
-export default async function EstoquePage({ searchParams }: { searchParams: SearchParams }) {
-  const rawParams = await searchParams;
-  const filters = parseVehicleFilters(rawParams);
-
+export default async function EstoquePage() {
   const [vehicles, brands] = await Promise.all([
-    vehicleRepository.getVehicles(filters),
+    vehicleRepository.getVehicles(),
     vehicleRepository.getBrands(),
   ]);
 
@@ -35,10 +29,8 @@ export default async function EstoquePage({ searchParams }: { searchParams: Sear
     <>
       <script
         type="application/ld+json"
-         
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
-      <ListViewTracker filters={filters} resultCount={vehicles.length} />
 
       <div className="border-b border-line bg-surface py-8">
         <Container>
@@ -47,12 +39,7 @@ export default async function EstoquePage({ searchParams }: { searchParams: Sear
         </Container>
       </div>
 
-      <VehicleFilters brands={brands} current={filters} resultCount={vehicles.length} />
-
-      <Container className="py-10">
-        <p className="mb-6 hidden text-sm text-muted lg:block">{vehicles.length} veículos encontrados</p>
-        <VehicleGrid vehicles={vehicles} />
-      </Container>
+      <InventoryClient vehicles={vehicles} brands={brands} />
     </>
   );
 }
