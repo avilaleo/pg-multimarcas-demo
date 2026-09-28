@@ -182,7 +182,7 @@ function DesktopFilterForm({
   const [moreOpen, setMoreOpen] = useState(hasSecondaryActive);
 
   return (
-    <form action="/estoque" method="get" onSubmit={onSubmit} className="mt-4 hidden lg:block">
+    <form action="https://avilaleo.github.io/pg-multimarcas-demo/estoque/" method="get" onSubmit={onSubmit} className="mt-4 hidden lg:block">
       <div className="grid gap-3 lg:grid-cols-[1.4fr_1fr_1fr_1fr_auto_auto] lg:items-end">
         <PrimaryFields brands={brands} modelsByBrand={modelsByBrand} current={current} />
         <Button
@@ -227,7 +227,7 @@ function SortControl({ current }: { current: VehicleFiltersType }) {
   }
 
   return (
-    <form ref={formRef} action="/estoque" method="get" className="flex items-center gap-2">
+    <form ref={formRef} action="https://avilaleo.github.io/pg-multimarcas-demo/estoque/" method="get" className="flex items-center gap-2">
       {current.q && <input type="hidden" name="q" value={current.q} />}
       {current.brand && <input type="hidden" name="brand" value={current.brand} />}
       {current.model && <input type="hidden" name="model" value={current.model} />}
@@ -276,7 +276,7 @@ function MobileFilterForm({
 }) {
   return (
     <form
-      action="/estoque"
+      action="https://avilaleo.github.io/pg-multimarcas-demo/estoque/"
       method="get"
       onSubmit={onSubmit}
       className="grid flex-1 grid-cols-2 gap-3 overflow-y-auto px-4 py-4"
@@ -285,7 +285,7 @@ function MobileFilterForm({
       <SecondaryFields current={current} />
 
       <div className="col-span-2 sticky bottom-0 -mx-4 mt-2 flex gap-3 border-t border-line bg-paper px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
-        <LinkButton href="/estoque" variant="outline" size="md" className="flex-1">
+        <LinkButton href="https://avilaleo.github.io/pg-multimarcas-demo/estoque/" variant="outline" size="md" className="flex-1">
           Limpar
         </LinkButton>
         <Button type="submit" variant="primary" size="md" className="flex-1">

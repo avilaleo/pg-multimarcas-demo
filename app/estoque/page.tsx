@@ -12,13 +12,11 @@ export const metadata: Metadata = {
   description:
     "Veja todo o estoque de veículos da PG Multimarcas em Praia Grande/SP, com filtro por marca, preço, ano e câmbio.",
   alternates: { canonical: "/estoque" },
+  openGraph: { url: "/estoque" },
 };
 
 export default async function EstoquePage() {
-  const [vehicles, brands] = await Promise.all([
-    vehicleRepository.getVehicles(),
-    vehicleRepository.getBrands(),
-  ]);
+  const vehicles = await vehicleRepository.getVehicles();
 
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", url: SITE_URL },
@@ -35,11 +33,11 @@ export default async function EstoquePage() {
       <div className="border-b border-line bg-surface py-8">
         <Container>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand">Estoque</p>
-          <h1 className="mt-1 font-display text-3xl font-bold text-ink">Todos os veículos</h1>
+          <h1 className="mt-1 font-display text-3xl font-bold text-ink">Estoque PG</h1>
         </Container>
       </div>
 
-      <InventoryClient vehicles={vehicles} brands={brands} />
+      <InventoryClient vehicles={vehicles} />
     </>
   );
 }

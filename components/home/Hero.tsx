@@ -37,7 +37,7 @@ export function Hero({ brands }: { brands: string[] }) {
         </p>
 
         <form
-          action="/estoque"
+          action="https://avilaleo.github.io/pg-multimarcas-demo/estoque/"
           method="get"
           className="mt-10 grid gap-3 rounded-lg bg-paper p-4 text-ink shadow-elevated sm:grid-cols-[1fr_1fr_1fr_auto]"
         >

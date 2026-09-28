@@ -15,10 +15,10 @@ export const dealerConfig = {
   logo: {
     // Official logo file, extracted from the live site — see
     // public/brand/PROVENANCE.md. Designed for a dark background.
-    dark: "/brand/pg-logo-dark.png",
+    dark: "/pg-multimarcas-demo/brand/pg-logo-dark.png",
     // Official compact badge (black square, white "PG"), used as favicon
     // and wherever the horizontal wordmark doesn't fit.
-    badge: "/brand/pg-badge.png",
+    badge: "/pg-multimarcas-demo/brand/pg-badge.png",
     initials: "PG",
   },
   brand: {

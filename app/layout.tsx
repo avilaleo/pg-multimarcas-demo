@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: dealerConfig.name,
     url: SITE_URL,
-    images: [{ url: "/brand/showroom-hero.jpg", width: 900, height: 1600 }],
+    images: [{ url: `${SITE_URL}/brand/showroom-hero.jpg`, width: 900, height: 1600 }],
   },
 };
 

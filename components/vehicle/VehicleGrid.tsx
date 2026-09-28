@@ -26,11 +26,11 @@ export function VehicleGrid({
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3">
           {hasActiveFilters && (
-            <LinkButton href="/estoque" variant="primary" size="sm">
+            <LinkButton href="https://avilaleo.github.io/pg-multimarcas-demo/estoque/" variant="primary" size="sm">
               Limpar filtros
             </LinkButton>
           )}
-          <LinkButton href="/estoque" variant="outline" size="sm">
+          <LinkButton href="https://avilaleo.github.io/pg-multimarcas-demo/estoque/" variant="outline" size="sm">
             Ver todo o estoque
           </LinkButton>
         </div>
