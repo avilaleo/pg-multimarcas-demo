@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Clock } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/InstagramIcon";
 import { Container } from "@/components/ui/Container";
@@ -10,24 +11,26 @@ const SITE_LINKS = [
   { href: "/", label: "Home" },
   { href: "/estoque", label: "Estoque" },
   { href: "/venda-seu-veiculo", label: "Venda seu Veículo" },
-  { href: "/sobre", label: "Sobre" },
+  { href: "/financiamento", label: "Financiamento" },
+  { href: "/sobre", label: "Loja" },
   { href: "/contato", label: "Contato" },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-ink text-white/80">
+    <footer className="border-t border-black-soft bg-black text-white/80">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2 font-display text-lg font-bold text-white">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-sm text-white">
-              {dealerConfig.logo.initials}
-            </span>
-            {dealerConfig.name}
-          </div>
+          <Image
+            src={dealerConfig.logo.dark}
+            alt={dealerConfig.name}
+            width={150}
+            height={40}
+            className="h-9 w-auto"
+          />
           <p className="mt-3 max-w-xs text-sm text-white/60">
             {dealerConfig.legalContext} — {dealerConfig.address.city}/{dealerConfig.address.state}.
-            Protótipo comercial de demonstração.
+            Veículos novos e usados, revisados e com fotos reais.
           </p>
         </div>
 
@@ -78,14 +81,10 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-white/10 py-6">
-        <Container className="flex flex-col items-center justify-between gap-2 text-xs text-white/70 sm:flex-row">
+        <Container className="text-center text-xs text-white/70">
           <p>
-            © {new Date().getFullYear()} {dealerConfig.name}. Protótipo de demonstração — não é o site
-            oficial da loja.
+            © {new Date().getFullYear()} {dealerConfig.name}. Todos os direitos reservados.
           </p>
-          <Link href="/sobre" className="hover:text-white">
-            Sobre este projeto
-          </Link>
         </Container>
       </div>
     </footer>
