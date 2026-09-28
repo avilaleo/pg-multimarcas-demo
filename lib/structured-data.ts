@@ -1,5 +1,6 @@
 import { dealerConfig } from "@/dealer.config";
 import { SITE_URL } from "@/lib/env";
+import { vehicleSummary } from "@/lib/format";
 import type { Vehicle } from "@/lib/domain/vehicle";
 
 export function localBusinessJsonLd() {
@@ -7,7 +8,10 @@ export function localBusinessJsonLd() {
     "@context": "https://schema.org",
     "@type": "AutomotiveBusiness",
     name: dealerConfig.name,
-    image: `${SITE_URL}/og-default.png`,
+    // Real photo of the physical showroom — see public/brand/PROVENANCE.md.
+    // (A previous version referenced /og-default.png, a file that never
+    // existed in public/, which schema.org consumers would fail to fetch.)
+    image: `${SITE_URL}/brand/showroom-hero.jpg`,
     telephone: `+${dealerConfig.contact.phoneE164}`,
     priceRange: "$$",
     address: {
@@ -41,7 +45,9 @@ export function vehicleJsonLd(vehicle: Vehicle) {
     "@context": "https://schema.org",
     "@type": ["Product", "Car"],
     name: `${vehicle.brand} ${vehicle.model} ${vehicle.version}`,
-    description: vehicle.description,
+    // Real per-vehicle copy when present; otherwise a factual summary built
+    // from structured fields — never the removed auto-generated paragraph.
+    description: vehicle.description ?? vehicleSummary(vehicle),
     image: vehicle.images,
     brand: {
       "@type": "Brand",
@@ -67,7 +73,9 @@ export function vehicleJsonLd(vehicle: Vehicle) {
         name: dealerConfig.name,
       },
     },
-    vehicleEngine: vehicle.fuel,
+    // `fuelType` (not `vehicleEngine`, which expects an EngineSpecification,
+    // not a fuel-type string) is the correct schema.org/Car property here.
+    fuelType: vehicle.fuel,
     mileageFromOdometer: {
       "@type": "QuantitativeValue",
       value: vehicle.mileage,

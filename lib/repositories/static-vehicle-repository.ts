@@ -1,5 +1,5 @@
 import type { Vehicle, VehicleFilters } from "@/lib/domain/vehicle";
-import type { VehicleRepository } from "@/lib/repositories/vehicle-repository";
+import type { RelatedVehicleMode, VehicleRepository } from "@/lib/repositories/vehicle-repository";
 import vehiclesData from "@/data/vehicles.json";
 
 const ALL_VEHICLES = vehiclesData as Vehicle[];
@@ -60,14 +60,57 @@ export class StaticVehicleRepository implements VehicleRepository {
     return ALL_VEHICLES.find((v) => v.slug === slug) ?? null;
   }
 
-  async getRelatedVehicles(vehicle: Vehicle, limit = 3): Promise<Vehicle[]> {
-    const sameBrand = ALL_VEHICLES.filter(
-      (v) => v.id !== vehicle.id && v.status === "available" && v.brand === vehicle.brand
-    );
-    const rest = ALL_VEHICLES.filter(
-      (v) => v.id !== vehicle.id && v.status === "available" && v.brand !== vehicle.brand
-    );
-    return [...sameBrand, ...rest].slice(0, limit);
+  /**
+   * V3 related-vehicles algorithms (docs/redesign-v3/vdp.md "Relacionados").
+   * Deterministic scoring/sorting only — no ML. Never includes `vehicle`
+   * itself. The VDP page calls this once per mode and only renders modes
+   * that come back non-empty.
+   */
+  async getRelatedVehiclesByMode(
+    vehicle: Vehicle,
+    mode: RelatedVehicleMode,
+    limit = 10
+  ): Promise<Vehicle[]> {
+    const candidates = ALL_VEHICLES.filter((v) => v.id !== vehicle.id && v.status === "available");
+
+    if (mode === "same-model") {
+      return candidates
+        .filter((v) => v.brand === vehicle.brand && v.model === vehicle.model)
+        .sort((a, b) => {
+          const yearDiff =
+            Math.abs(a.modelYear - vehicle.modelYear) - Math.abs(b.modelYear - vehicle.modelYear);
+          if (yearDiff !== 0) return yearDiff;
+          return Math.abs(a.price - vehicle.price) - Math.abs(b.price - vehicle.price);
+        })
+        .slice(0, limit);
+    }
+
+    if (mode === "price-range") {
+      return candidates
+        .filter((v) => Math.abs(v.price - vehicle.price) / vehicle.price <= 0.2)
+        .sort((a, b) => Math.abs(a.price - vehicle.price) - Math.abs(b.price - vehicle.price))
+        .slice(0, limit);
+    }
+
+    // "similar": +50 mesmo bodyType, +25 preço ±15% (senão +15 se ±30%, nunca os dois),
+    // +10 modelYear a até 2 anos de diferença, +5 mesma transmissão.
+    return candidates
+      .map((candidate) => {
+        let score = 0;
+        if (candidate.bodyType === vehicle.bodyType) score += 50;
+
+        const priceDiffRatio = Math.abs(candidate.price - vehicle.price) / vehicle.price;
+        if (priceDiffRatio <= 0.15) score += 25;
+        else if (priceDiffRatio <= 0.3) score += 15;
+
+        if (Math.abs(candidate.modelYear - vehicle.modelYear) <= 2) score += 10;
+        if (candidate.transmission === vehicle.transmission) score += 5;
+
+        return { candidate, score, priceDiff: Math.abs(candidate.price - vehicle.price) };
+      })
+      .sort((a, b) => (b.score !== a.score ? b.score - a.score : a.priceDiff - b.priceDiff))
+      .slice(0, limit)
+      .map((entry) => entry.candidate);
   }
 
   async getBrands(): Promise<string[]> {
