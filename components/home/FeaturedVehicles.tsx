@@ -10,14 +10,14 @@ export function FeaturedVehicles({ vehicles }: { vehicles: Vehicle[] }) {
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand">Novidades</p>
-            <h2 className="mt-1 font-display text-3xl font-bold text-ink">Veículos em destaque</h2>
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand">Estoque</p>
+            <h2 className="mt-1 font-display text-3xl font-bold text-ink">Últimas novidades</h2>
           </div>
           <Link
             href="/estoque"
             className="inline-flex items-center gap-1 text-sm font-semibold text-ink hover:text-brand"
           >
-            Ver todo o estoque
+            Ver estoque completo
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
