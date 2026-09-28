@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE_INDEXABLE, SITE_URL } from "@/lib/env";
 
+export const dynamic = "force-static";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {

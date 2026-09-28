@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { vehicleRepository } from "@/lib/repositories/static-vehicle-repository";
 import { SITE_URL } from "@/lib/env";
 
+export const dynamic = "force-static";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const vehicles = await vehicleRepository.getVehicles();
 
