@@ -1,15 +1,27 @@
 {
-  "name": "pg-multimarcas-demo",
-  "version": "1.0.0",
+  "name": "pg-multimarcas-web",
+  "version": "0.1.0",
   "private": true,
-  "description": "Demo pública da proposta de experiência web para a PG Multimarcas.",
+  "description": "Protótipo de nova experiência web para a PG Multimarcas (demo comercial).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avilaleo/pg-multimarcas-web.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "import:inventory": "tsx scripts/import-legacy-inventory.ts",
+    "sync:inventory": "tsx scripts/sync-current-inventory.ts",
+    "generate:favicon": "node scripts/generate-favicon.mjs",
+    "capture:baseline": "node scripts/capture-baseline-screenshots.mjs",
+    "capture:demo": "node scripts/capture-demo-screenshots.mjs",
+    "smoke": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "lucide-react": "^1.47.0",
     "next": "16.3.6",
     "react": "19.2.8",
@@ -22,7 +34,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
+    "lighthouse": "^13.5.0",
+    "playwright": "^1.63.0",
     "tailwindcss": "^4",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }

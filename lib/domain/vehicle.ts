@@ -1,4 +1,11 @@
-export type VehicleStatus = "available" | "reserved" | "sold";
+/**
+ * "preparing" mirrors the AutoCerto/PG operational state where a vehicle is
+ * confirmed in stock but not yet ready to show (no final photos/details) —
+ * see docs/product/architecture.md. It is excluded from listings the same
+ * way "sold"/"reserved" are (StaticVehicleRepository), but its VDP still
+ * renders with a real "em preparação" state instead of a fake gallery.
+ */
+export type VehicleStatus = "available" | "reserved" | "sold" | "preparing";
 
 export type Transmission = "Manual" | "Automático" | "Automatizado" | "CVT";
 
@@ -22,7 +29,14 @@ export interface Vehicle {
   /** Not publicly exposed on the source listing for every unit; omitted when unknown. */
   color?: string;
   bodyType: string;
-  description: string;
+  /**
+   * Free-text copy, e.g. from AutoCerto or a future CMS. Optional: the
+   * sync script no longer fabricates a repetitive auto-generated paragraph
+   * from the structured fields (docs/redesign-v3/vdp.md 10.6) — most
+   * vehicles have none. Never used for SEO; see lib/format.ts
+   * vehicleSummary() for that.
+   */
+  description?: string;
   features: string[];
   images: string[];
   featured: boolean;

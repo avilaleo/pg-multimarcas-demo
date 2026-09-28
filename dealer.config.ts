@@ -5,20 +5,28 @@
  * starting point for another dealer by editing this one file.
  *
  * Contact details below were confirmed against the live site during the
- * 2026-09-23 baseline capture (see docs/baseline/2026-09-23/baseline.md).
+ * 2026-09-23 baseline capture (see docs/baseline/2026-09-23/baseline.md)
+ * and re-confirmed against the live site on 2026-09-27 during the V2
+ * brand redesign (see docs/redesign-v2/README.md).
  */
 export const dealerConfig = {
   name: "PG Multimarcas",
   legalContext: "Auto Shopping Praia Grande",
   logo: {
-    // No dedicated logo asset was captured; the header renders a text
-    // wordmark styled after the brand colors observed on-site (red/black).
+    // Official logo file, extracted from the live site — see
+    // public/brand/PROVENANCE.md. Designed for a dark background.
+    dark: "/brand/pg-logo-dark.png",
+    // Official compact badge (black square, white "PG"), used as favicon
+    // and wherever the horizontal wordmark doesn't fit.
+    badge: "/brand/pg-badge.png",
     initials: "PG",
   },
   brand: {
-    primary: "#D4162C",
-    primaryDark: "#A10E20",
-    ink: "#15181C",
+    // Sampled by pixel from the official logo asset — see
+    // public/brand/PROVENANCE.md. Kept in sync with app/globals.css.
+    primary: "#D20E0E",
+    primaryDark: "#A10B0B",
+    ink: "#0B0C0E",
   },
   address: {
     line1: "Av. Ayrton Senna da Silva, 611",
